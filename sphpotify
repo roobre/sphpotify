@@ -1,0 +1,19 @@
+#!/usr/bin/php
+
+<?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+const CONSUMER_KEY = '';
+const CONSUMER_SECRET = '';
+
+const OAUTH_TOKEN = '';
+const OAUTH_TOKEN_SECRET = '';
+
+$title = exec('playerctl metadata title');
+$artist = exec('playerctl metadata artist');
+
+if ($title && $artist) {
+    $twitter = new Abraham\TwitterOAuth\TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET);
+    $twitter->post('statuses/update', array('status' => "#NP $title - $artist"));
+}
